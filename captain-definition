@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 2,
+  "dockerfileLines": [
+    "FROM node:18-alpine AS builder",
+    "WORKDIR /app",
+    "COPY . .",
+    "RUN npm install && npm run build",
+    "FROM socialengine/nginx-spa:latest",
+    "COPY --from=builder /app/dist /app",
+    "RUN chmod -R 755 /app"
+  ]
+}
